@@ -3,4 +3,4 @@
 Build and run the project gigaclear_techtest
 
 Use the command:
-dotnet gigaclear_techtest -f [filename]
+`dotnet gigaclear_techtest.dll -f [filename]`
