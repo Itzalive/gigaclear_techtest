@@ -74,7 +74,33 @@ namespace Gigaclear_TechTest
             cost += rateCard.Pot * Nodes.Count(node => node.Type == NodeType.Pot);
             cost += rateCard.TrenchRoad * Edges.Where(edge => edge.Type == EdgeType.Road).Sum(edge => edge.Length);
             cost += rateCard.TrenchVerge * Edges.Where(edge => edge.Type == EdgeType.Verge).Sum(edge => edge.Length);
+            cost += rateCard.PotFromCabinet * Nodes.Where(node => node.Type == NodeType.Pot).Sum(node => DistanceToCabinetFromNode(node));
             return cost;
+        }
+
+        public int DistanceToCabinetFromNode(Node node)
+        {
+            Dictionary<Node, int> distanceToNodes = new Dictionary<Node, int>();
+
+            distanceToNodes.Add(node, 0);
+
+            distanceToNodes = calculateDistanceNextNodes(node, distanceToNodes, 0);
+
+            return distanceToNodes.Where((kvp) => kvp.Key.Type == NodeType.Cabinet).OrderBy(kvp => kvp.Value).First().Value;
+        }
+
+        private Dictionary<Node, int> calculateDistanceNextNodes(Node node, Dictionary<Node, int> distanceToNodes, int distanceAlready)
+        {
+            var linkedEdges = Edges.Where(edge => edge.StartNode.Id == node.Id || edge.EndNode.Id == node.Id);
+            foreach (var edge in linkedEdges)
+            {
+                var otherNode = edge.StartNode.Id == node.Id ? edge.EndNode : edge.StartNode;
+                if (distanceToNodes.ContainsKey(otherNode))
+                    continue;
+                distanceToNodes.Add(otherNode, edge.Length + distanceAlready);
+                distanceToNodes = calculateDistanceNextNodes(otherNode, distanceToNodes, edge.Length + distanceAlready);
+            }
+            return distanceToNodes;
         }
 
         private void processDotFileLine(string line)

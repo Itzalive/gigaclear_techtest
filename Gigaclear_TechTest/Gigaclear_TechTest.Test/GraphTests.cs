@@ -323,6 +323,21 @@ namespace Gigaclear_TechTest.Test
             Assert.That(cost, Is.EqualTo(180));
         }
 
+        [TestCase("B", 70)]
+        [TestCase("C", 200)]
+        [TestCase("D", 350)]
+        public void CalculateDistanceToCabinetOfNode(string nodeId, int expectedDistance)
+        {
+            // Arrange
+            var graph = readDotFileHelper("A [type=Cabinet];B [type=Pot];C [type=Pot];D [type=Pot];E [type=Chamber];F [type=Chamber];G [type=Chamber];A -- E  [length=50, material=verge];B -- E  [length=20, material=verge];C -- F  [length=50, material=road];D -- G  [length=100, material=road];E -- F  [length=100, material=road];F -- G  [length=100, material=verge];");
+
+            // Act
+            var distance = graph.DistanceToCabinetFromNode(graph.GetNodeById(nodeId));
+
+            // Assert
+            Assert.That(distance, Is.EqualTo(expectedDistance));
+        }
+
         private Graph readDotFileHelper(string dotFileLines)
         {
             string contents = $"strict graph \"\" {{\r\n{dotFileLines}\r\n}}\r\n";

@@ -9,8 +9,9 @@
             public int Pot { get; set; }
             public int TrenchRoad { get; set; }
             public int TrenchVerge { get; set; }
+            public int PotFromCabinet { get; set; }
             public string Filename { get; set; } = "";
-            public RateCard RateCard => new RateCard() { Cabinet = Cabinet, Chamber = Chamber, Pot = Pot, TrenchRoad = TrenchRoad, TrenchVerge = TrenchVerge };
+            public RateCard RateCard => new RateCard() { Cabinet = Cabinet, Chamber = Chamber, Pot = Pot, TrenchRoad = TrenchRoad, TrenchVerge = TrenchVerge, PotFromCabinet = PotFromCabinet };
         }
     }
 }
