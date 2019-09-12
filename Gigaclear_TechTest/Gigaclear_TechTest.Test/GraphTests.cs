@@ -259,6 +259,70 @@ namespace Gigaclear_TechTest.Test
             Assert.That(graph.Edges[1].Length, Is.EqualTo(56));
         }
 
+        [TestCase(1, 10, 2, 100, 3, 1000, 3210)]
+        [TestCase(2, 3, 4, 4, 2, 5, 32)]
+        public void CalculateCostsNodeTypes(int numCabinets, int costCabinet, int numChambers, int costChamber, int numPots, int costPot, int totalCost)
+        {
+            // Arrange
+            var rateCard = new RateCard { Cabinet = costCabinet, Chamber = costChamber, Pot = costPot };
+            var graph = new Graph();
+            var n = 0;
+            for (int i = 0; i < numCabinets; i++)
+                graph.AddNode(new Node((++n).ToString(), NodeType.Cabinet));
+            for (int i = 0; i < numChambers; i++)
+                graph.AddNode(new Node((++n).ToString(), NodeType.Chamber));
+            for (int i = 0; i < numPots; i++)
+                graph.AddNode(new Node((++n).ToString(), NodeType.Pot));
+
+            // Act
+            var cost = graph.CalculateCost(rateCard);
+
+            // Assert
+            Assert.That(cost, Is.EqualTo(totalCost));
+        }
+
+        [Test]
+        public void CalculateCostsVergeEdge()
+        {
+            // Arrange
+            var rateCard = new RateCard { TrenchVerge = 8 };
+            var graph = new Graph();
+            var n = 0;
+            for (int i = 0; i < 10; i++)
+            graph.AddNode(new Node((++n).ToString(), NodeType.Chamber));
+
+            graph.AddEdge(new Edge(graph.GetNodeById("1"), graph.GetNodeById("2"), EdgeType.Verge, 10));
+            graph.AddEdge(new Edge(graph.GetNodeById("1"), graph.GetNodeById("3"), EdgeType.Verge, 30));
+            graph.AddEdge(new Edge(graph.GetNodeById("1"), graph.GetNodeById("4"), EdgeType.Road, 30));
+
+            // Act
+            var cost = graph.CalculateCost(rateCard);
+
+            // Assert
+            Assert.That(cost, Is.EqualTo(320));
+        }
+
+        [Test]
+        public void CalculateCostsRoadEdge()
+        {
+            // Arrange
+            var rateCard = new RateCard { TrenchRoad = 6 };
+            var graph = new Graph();
+            var n = 0;
+            for (int i = 0; i < 10; i++)
+                graph.AddNode(new Node((++n).ToString(), NodeType.Chamber));
+
+            graph.AddEdge(new Edge(graph.GetNodeById("1"), graph.GetNodeById("2"), EdgeType.Verge, 10));
+            graph.AddEdge(new Edge(graph.GetNodeById("1"), graph.GetNodeById("3"), EdgeType.Verge, 30));
+            graph.AddEdge(new Edge(graph.GetNodeById("1"), graph.GetNodeById("4"), EdgeType.Road, 30));
+
+            // Act
+            var cost = graph.CalculateCost(rateCard);
+
+            // Assert
+            Assert.That(cost, Is.EqualTo(180));
+        }
+
         private Graph readDotFileHelper(string dotFileLines)
         {
             string contents = $"strict graph \"\" {{\r\n{dotFileLines}\r\n}}\r\n";

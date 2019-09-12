@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key attr.name="length" attr.type="long" for="edge" id="d2" />
+  <key attr.name="material" attr.type="string" for="edge" id="d1" />
+  <key attr.name="type" attr.type="string" for="node" id="d0" />
+  <graph edgedefault="undirected">
+    <node id="A">
+      <data key="d0">Cabinet</data>
+    </node>
+    <node id="B">
+      <data key="d0">Pot</data>
+    </node>
+    <node id="C">
+      <data key="d0">Pot</data>
+    </node>
+    <node id="D">
+      <data key="d0">Pot</data>
+    </node>
+    <node id="E">
+      <data key="d0">Chamber</data>
+    </node>
+    <node id="F">
+      <data key="d0">Chamber</data>
+    </node>
+    <node id="G">
+      <data key="d0">Chamber</data>
+    </node>
+    <edge source="A" target="E">
+      <data key="d1">verge</data>
+      <data key="d2">50</data>
+    </edge>
+    <edge source="B" target="E">
+      <data key="d1">verge</data>
+      <data key="d2">20</data>
+    </edge>
+    <edge source="C" target="F">
+      <data key="d1">road</data>
+      <data key="d2">50</data>
+    </edge>
+    <edge source="D" target="G">
+      <data key="d1">road</data>
+      <data key="d2">100</data>
+    </edge>
+    <edge source="E" target="F">
+      <data key="d1">road</data>
+      <data key="d2">100</data>
+    </edge>
+    <edge source="F" target="G">
+      <data key="d1">verge</data>
+      <data key="d2">100</data>
+    </edge>
+  </graph>
+</graphml>

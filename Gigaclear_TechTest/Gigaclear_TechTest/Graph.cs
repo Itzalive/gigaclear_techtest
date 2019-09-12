@@ -66,6 +66,17 @@ namespace Gigaclear_TechTest
             return graph;
         }
 
+        public int CalculateCost(RateCard rateCard)
+        {
+            var cost = 0;
+            cost += rateCard.Cabinet * Nodes.Count(node => node.Type == NodeType.Cabinet);
+            cost += rateCard.Chamber * Nodes.Count(node => node.Type == NodeType.Chamber);
+            cost += rateCard.Pot * Nodes.Count(node => node.Type == NodeType.Pot);
+            cost += rateCard.TrenchRoad * Edges.Where(edge => edge.Type == EdgeType.Road).Sum(edge => edge.Length);
+            cost += rateCard.TrenchVerge * Edges.Where(edge => edge.Type == EdgeType.Verge).Sum(edge => edge.Length);
+            return cost;
+        }
+
         private void processDotFileLine(string line)
         {
 
